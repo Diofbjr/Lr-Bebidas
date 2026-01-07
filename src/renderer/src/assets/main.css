@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+/* Opcional: Configuração para o Inter se você for usar via Google Fonts ou local */
+:root {
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+/* Reset básico para garantir que o Electron ocupe a tela toda sem rolagens estranhas */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Importante para sistemas de caixa/PDV */
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
