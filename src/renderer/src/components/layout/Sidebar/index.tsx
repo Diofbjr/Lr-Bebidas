@@ -1,6 +1,5 @@
 import { JSX } from 'react'
 
-// Definimos exatamente quais strings são aceitas
 export type PageName =
   | 'dashboard'
   | 'produtos'
@@ -17,8 +16,14 @@ interface SidebarProps {
   onNavigate: (page: PageName) => void
 }
 
-export default function Sidebar({ onLogout, activePage, onNavigate }: SidebarProps): JSX.Element {
-  const menuItems: { id: PageName; name: string; top: string }[] = [
+interface MenuItem {
+  id: PageName
+  name: string
+  top: string
+}
+
+export function Sidebar({ onLogout, activePage, onNavigate }: SidebarProps): JSX.Element {
+  const menuItems: MenuItem[] = [
     { id: 'dashboard', name: 'Dashboard', top: 'top-24' },
     { id: 'produtos', name: 'Produtos', top: 'top-40' },
     { id: 'compras', name: 'Compras', top: 'top-52' },
@@ -31,7 +36,7 @@ export default function Sidebar({ onLogout, activePage, onNavigate }: SidebarPro
 
   return (
     <aside className="w-65 h-screen absolute left-0 top-0 z-20 bg-[#2A2A2A]">
-      <p className="text-white font-inter text-xl font-bold w-27.25 absolute left-19 top-7 text-center">
+      <p className="text-white font-inter text-xl font-bold w-full absolute top-7 text-center">
         LR Bebidas
       </p>
 

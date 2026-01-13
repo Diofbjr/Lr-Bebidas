@@ -1,5 +1,7 @@
 import { JSX } from 'react'
-import Sidebar, { PageName } from './Sidebar'
+import { Sidebar, PageName } from '../../components/layout/Sidebar'
+import { Header } from '../../components/layout/Header'
+import { MetricCard } from '../../components/ui/MetricCard'
 import {
   BarChart,
   Bar,
@@ -16,7 +18,6 @@ interface DashboardProps {
   onNavigate: (page: PageName) => void
 }
 
-// Dados fictícios para o gráfico de vendas
 const dadosVendas = [
   { dia: 'Seg', valor: 2400 },
   { dia: 'Ter', valor: 1398 },
@@ -32,12 +33,8 @@ export default function Dashboard({ onLogout, onNavigate }: DashboardProps): JSX
     <div className="min-w-screen min-h-screen overflow-hidden relative bg-[#1F1F1F]">
       <Sidebar activePage="dashboard" onLogout={onLogout} onNavigate={onNavigate} />
 
-      {/* Header Superior */}
-      <header className="absolute left-65 top-0 w-[calc(100%-260px)] h-16 flex items-center px-10 border-b border-[#3A3A3A] bg-[#1F1F1F] z-10">
-        <h2 className="text-white font-inter text-2xl font-bold">Dashboard</h2>
-      </header>
+      <Header title="Dashboard" />
 
-      {/* Container de Conteúdo */}
       <main className="absolute left-65 top-16 w-[calc(100%-260px)] h-[calc(100vh-64px)] overflow-y-auto p-10 custom-scrollbar">
         <div className="flex flex-wrap gap-6 mb-10">
           <MetricCard label="Estoque crítico" value="12" color="text-[#EF4444]" />
@@ -47,7 +44,6 @@ export default function Dashboard({ onLogout, onNavigate }: DashboardProps): JSX
         </div>
 
         <div className="flex flex-wrap gap-6">
-          {/* Seção do Gráfico Preenchida */}
           <section className="flex-1 min-w-150 h-90 bg-[#2A2A2A] rounded-xl p-6 border border-[#3A3A3A] shadow-lg flex flex-col">
             <h3 className="text-white font-inter text-base mb-6 font-semibold">
               Vendas por dia (Semana Atual)
@@ -69,7 +65,7 @@ export default function Dashboard({ onLogout, onNavigate }: DashboardProps): JSX
                     fontSize={12}
                     tickLine={false}
                     axisLine={false}
-                    tickFormatter={(val: number) => `R$${val}`}
+                    tickFormatter={(val: number): string => `R$${val}`}
                   />
                   <Tooltip
                     cursor={{ fill: '#333', opacity: 0.4 }}
@@ -94,7 +90,6 @@ export default function Dashboard({ onLogout, onNavigate }: DashboardProps): JSX
             </div>
           </section>
 
-          {/* Top Produtos */}
           <section className="w-md h-90 bg-[#2A2A2A] rounded-xl p-6 border border-[#3A3A3A] shadow-lg overflow-hidden">
             <h3 className="text-white font-inter text-base mb-6 font-semibold">Top produtos</h3>
             <ul className="space-y-4">
@@ -120,27 +115,6 @@ export default function Dashboard({ onLogout, onNavigate }: DashboardProps): JSX
           </section>
         </div>
       </main>
-    </div>
-  )
-}
-
-/** * Sub-componente com tipagem explícita para evitar erros do ESLint
- */
-function MetricCard({
-  label,
-  value,
-  color
-}: {
-  label: string
-  value: string
-  color: string
-}): JSX.Element {
-  return (
-    <div className="w-70 h-30 bg-[#2A2A2A] rounded-xl p-5 border border-[#3A3A3A] shadow-md transition-all hover:border-[#444] hover:-translate-y-1">
-      <p className="text-[#777] text-[10px] font-bold uppercase tracking-widest">{label}</p>
-      <p className={`${color} font-inter text-3xl font-bold mt-2 font-mono tracking-tighter`}>
-        {value}
-      </p>
     </div>
   )
 }

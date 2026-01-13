@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { JSX, useState } from 'react'
 
 interface ModalTrocarSenhaProps {

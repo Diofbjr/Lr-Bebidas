@@ -1,79 +1,93 @@
+/* eslint-disable prettier/prettier */
 import { useState, JSX } from 'react'
-import Login from './components/Login'
-import Dashboard from './components/Dashboard'
-import Produtos from './components/Produtos'
-import Compras from './components/Compras'
-import Vendas from './components/Vendas'
-import Estoque from './components/Estoque' // Importação da nova tela de Estoque
-import { PageName } from './components/Sidebar'
-import Financeiro from './components/Financeiro'
-import Relatorios from './components/Relatorios'
-import Usuarios from './components/Usuarios'
+import Login from './pages/Login'
+import Dashboard from './pages/Dashboard'
+import Sales from './pages/Sales'
+import Products from './pages/Products'
+import Inventory from './pages/Inventory'
+import Purchases from './pages/Purchases'
+import Finance from './pages/Finance'
+import Reports from './pages/Reports'
+import Usuarios from './pages/Users' // Certifique-se que a pasta chama Users ou Usuarios
+
+// Definição estrita das páginas do sistema
+export type PageName =
+  | 'dashboard'
+  | 'vendas'
+  | 'produtos'
+  | 'estoque'
+  | 'compras'
+  | 'financeiro'
+  | 'relatorios'
+  | 'usuarios'
 
 export default function App(): JSX.Element {
+  // Estado de Autenticação
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  
+  // Estado de Navegação (Inicia no Dashboard após login)
   const [currentPage, setCurrentPage] = useState<PageName>('dashboard')
 
-  // Funções de manipulação de estado
+  // Funções de Controle
+  const handleLogin = (): void => setIsAuthenticated(true)
+  
   const handleLogout = (): void => {
     setIsAuthenticated(false)
     setCurrentPage('dashboard')
   }
 
-  const handleLogin = (): void => {
-    setIsAuthenticated(true)
-  }
-
-  // Se não estiver autenticado, mostra o Login
+  // Renderização Condicional: Login
   if (!isAuthenticated) {
     return <Login onLoginSuccess={handleLogin} />
   }
 
-  // Renderização condicional das telas
+  // Renderização Condicional: Sistema Principal (Dashboard e Módulos)
   return (
-    <main className="min-h-screen w-full select-none bg-[#1F1F1F]">
+    <main className="min-h-screen w-full select-none bg-[#1F1F1F] text-white font-inter">
+      
       {currentPage === 'dashboard' && (
         <Dashboard onLogout={handleLogout} onNavigate={setCurrentPage} />
       )}
 
-      {currentPage === 'produtos' && (
-        <Produtos onLogout={handleLogout} onNavigate={setCurrentPage} />
+      {currentPage === 'vendas' && (
+        <Sales onLogout={handleLogout} onNavigate={setCurrentPage} />
       )}
 
-      {currentPage === 'compras' && <Compras onLogout={handleLogout} onNavigate={setCurrentPage} />}
+      {currentPage === 'produtos' && (
+        <Products onLogout={handleLogout} onNavigate={setCurrentPage} />
+      )}
 
-      {currentPage === 'vendas' && <Vendas onLogout={handleLogout} onNavigate={setCurrentPage} />}
+      {currentPage === 'estoque' && (
+        <Inventory onLogout={handleLogout} onNavigate={setCurrentPage} />
+      )}
 
-      {currentPage === 'estoque' && <Estoque onLogout={handleLogout} onNavigate={setCurrentPage} />}
+      {currentPage === 'compras' && (
+        <Purchases onLogout={handleLogout} onNavigate={setCurrentPage} />
+      )}
 
       {currentPage === 'financeiro' && (
-        <Financeiro onLogout={handleLogout} onNavigate={setCurrentPage} />
+        <Finance onLogout={handleLogout} onNavigate={setCurrentPage} />
       )}
 
       {currentPage === 'relatorios' && (
-        <Relatorios onLogout={handleLogout} onNavigate={setCurrentPage} />
+        <Reports onLogout={handleLogout} onNavigate={setCurrentPage} />
       )}
 
       {currentPage === 'usuarios' && (
         <Usuarios onLogout={handleLogout} onNavigate={setCurrentPage} />
       )}
 
-      {/* Verificação de segurança para telas em desenvolvimento */}
-      {!['dashboard', 'produtos', 'compras', 'vendas', 'estoque'].includes(currentPage) && (
-        <div className="flex h-screen items-center justify-center ml-65 text-white font-inter">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold mb-4">Em breve!</h1>
-            <p className="text-[#B5B5B5]">
-              A tela de <span className="text-white uppercase font-bold">{currentPage}</span> está
-              sendo preparada.
-            </p>
-            <button
-              onClick={() => setCurrentPage('dashboard')}
-              className="mt-6 px-6 py-2 bg-[#22C55E] rounded-lg text-sm font-bold hover:bg-green-600 transition-colors"
-            >
-              Voltar ao Dashboard
-            </button>
-          </div>
+      {/* Fallback de Segurança para Rotas Inexistentes */}
+      {!['dashboard', 'vendas', 'produtos', 'estoque', 'compras', 'financeiro', 'relatorios', 'usuarios'].includes(currentPage) && (
+        <div className="flex h-screen flex-col items-center justify-center bg-[#1F1F1F]">
+          <h1 className="text-6xl font-black text-[#2A2A2A] mb-4 uppercase">404</h1>
+          <p className="text-[#777] mb-8">Página não encontrada ou em desenvolvimento.</p>
+          <button
+            onClick={() => setCurrentPage('dashboard')}
+            className="px-8 py-3 bg-[#22C55E] rounded-xl font-bold uppercase text-xs tracking-widest hover:bg-green-600 transition-all cursor-pointer"
+          >
+            Voltar ao Dashboard
+          </button>
         </div>
       )}
     </main>
