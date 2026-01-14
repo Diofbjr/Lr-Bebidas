@@ -6,7 +6,7 @@ import icon from '../../resources/icon.png?asset'
 
 function createWindow(): void {
   const mainWindow = new BrowserWindow({
-    width: 1280, // Aumentei um pouco para o PDV ficar confortável
+    width: 1280,
     height: 720,
     show: false,
     autoHideMenuBar: true,
@@ -54,11 +54,10 @@ app.whenReady().then(() => {
     return new Promise((resolve) => {
       win.webContents.print(
         {
-          silent: false, // Deixe false para teste, true para PDV real
+          silent: false, // False para teste, true para PDV real
           printBackground: true,
           color: false, // Padrão para impressoras térmicas
           margins: {
-            // Corrigido de 'margin' para 'margins'
             marginType: 'none'
           }
         },

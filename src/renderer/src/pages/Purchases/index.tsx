@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { JSX, useState } from 'react'
 import { Sidebar, PageName } from '../../components/layout/Sidebar'
 import { Header } from '../../components/layout/Header'
@@ -14,7 +13,13 @@ const PURCHASES_MOCK: Purchase[] = [
     supplier: 'Ambev Distribuidora',
     totalValue: 'R$ 2.450,00',
     items: [
-      { product: 'Cerveja Pilsen 350ml', quantity: 10, unit: 'Caixa', unitPrice: 45.0, subtotal: 450.0 }
+      {
+        product: 'Cerveja Pilsen 350ml',
+        quantity: 10,
+        unit: 'Caixa',
+        unitPrice: 45.0,
+        subtotal: 450.0
+      }
     ]
   }
 ]
@@ -42,9 +47,7 @@ export default function Purchases({ onLogout, onNavigate }: PurchasesProps): JSX
       <main className="absolute left-65 top-16 w-[calc(100%-260px)] h-[calc(100vh-64px)] overflow-y-auto p-10 flex flex-col gap-6 custom-scrollbar">
         <div className="flex justify-end items-center w-full">
           <div className="w-48">
-            <Button onClick={(): void => setIsNewPurchaseModalOpen(true)}>
-              + NOVA COMPRA
-            </Button>
+            <Button onClick={(): void => setIsNewPurchaseModalOpen(true)}>+ NOVA COMPRA</Button>
           </div>
         </div>
 
@@ -59,11 +62,20 @@ export default function Purchases({ onLogout, onNavigate }: PurchasesProps): JSX
 
           <div className="flex-1 overflow-y-auto space-y-3 pr-2 custom-scrollbar">
             {PURCHASES_MOCK.map((purchase) => (
-              <div key={purchase.id} className="flex items-center w-full h-16 bg-[#1F1F1F] rounded-xl px-6 hover:bg-[#252525] transition-all group border border-transparent hover:border-[#3A3A3A]">
+              <div
+                key={purchase.id}
+                className="flex items-center w-full h-16 bg-[#1F1F1F] rounded-xl px-6 hover:bg-[#252525] transition-all group border border-transparent hover:border-[#3A3A3A]"
+              >
                 <span className="w-48 text-[#B5B5B5] font-mono text-sm">{purchase.date}</span>
-                <span className="flex-1 text-white font-inter text-sm font-semibold">{purchase.supplier}</span>
-                <span className="w-35 text-center text-[#777] font-inter text-sm font-bold">{purchase.items.length}</span>
-                <span className="w-45 text-center text-[#22C55E] font-mono text-base font-bold">{purchase.totalValue}</span>
+                <span className="flex-1 text-white font-inter text-sm font-semibold">
+                  {purchase.supplier}
+                </span>
+                <span className="w-35 text-center text-[#777] font-inter text-sm font-bold">
+                  {purchase.items.length}
+                </span>
+                <span className="w-45 text-center text-[#22C55E] font-mono text-base font-bold">
+                  {purchase.totalValue}
+                </span>
                 <div className="w-24 text-right">
                   <button
                     onClick={(): void => handleShowDetails(purchase)}
@@ -78,8 +90,15 @@ export default function Purchases({ onLogout, onNavigate }: PurchasesProps): JSX
         </div>
       </main>
 
-      <NewPurchaseModal isOpen={isNewPurchaseModalOpen} onClose={() => setIsNewPurchaseModalOpen(false)} />
-      <PurchaseDetailsModal isOpen={isDetailsModalOpen} onClose={() => setIsDetailsModalOpen(false)} purchase={selectedPurchase} />
+      <NewPurchaseModal
+        isOpen={isNewPurchaseModalOpen}
+        onClose={() => setIsNewPurchaseModalOpen(false)}
+      />
+      <PurchaseDetailsModal
+        isOpen={isDetailsModalOpen}
+        onClose={() => setIsDetailsModalOpen(false)}
+        purchase={selectedPurchase}
+      />
     </div>
   )
 }
