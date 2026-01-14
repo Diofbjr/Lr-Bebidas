@@ -31,17 +31,57 @@ O projeto utiliza o **Electron Forge** com o template de **Vite** para garantir 
 A estrutura de pastas segue as melhores práticas para projetos Electron + React:
 
 ```text
-src/
-├── main/                 # Lógica do processo principal (Electron)
-│   └── index.ts          # Configuração da janela e IPCs
-├── preload/              # Scripts de pré-carregamento (Segurança)
-└── renderer/             # Frontend da aplicação (React)
-    ├── src/
-    │   ├── assets/       # Imagens e estilos globais
-    │   ├── components/   # Componentes reutilizáveis (Modais, Inputs)
-    │   ├── pages/        # Telas da aplicação (Usuários, Dashboard)
-    │   ├── types/        # Definições de interfaces TypeScript
-    │   └── App.tsx       # Gerenciador de rotas e estado global
+renderer/
+└── src/
+    ├── App.tsx
+    ├── main.tsx
+    ├── env.d.ts
+    ├── components/
+    │   ├── ui/                    # Componentes burros (reutilizáveis)
+    │   │   ├── Button/
+    │   │   │   ├── index.tsx
+    │   │   │   └── styles.ts
+    │   │   ├── Input/
+    │   │   ├── Modal/
+    │   │   └── Select/
+    │   │
+    │   ├── layout/                # Estrutura visual das telas
+    │   │   ├── Sidebar/
+    │   │   ├── Header/
+    │   │   └── PageContainer/
+    │   │
+    │   └── feedback/              # UX / Estados visuais
+    │       ├── Toast/
+    │       ├── Loader/
+    │       └── EmptyState/
+    │
+    ├── pages/                     # Telas (regra + layout)
+    │   ├── Login/
+    │   │   ├── index.tsx
+    │   │   └── styles.ts
+    │   ├── Dashboard/
+    │   ├── Produtos/
+    │   ├── Vendas/
+    │   └── Usuarios/
+    │
+    ├── services/                  # Comunicação externa
+    │   ├── ipc/
+    │   │   ├── produtos.ts
+    │   │   ├── vendas.ts
+    │   │   └── usuarios.ts
+    │
+    ├── hooks/                     # Hooks de domínio
+    │   ├── useAuth.ts
+    │   ├── useModal.ts
+    │   └── useDebounce.ts
+    │
+    ├── types/                     # Tipos globais
+    │   ├── produto.ts
+    │   ├── venda.ts
+    │   └── usuario.ts
+    │
+    ├── styles/
+    │   └── globals.css
 ```
 ## 🛤️ Sistema de Rotas
 A navegação é gerenciada através de um estado centralizado no App.tsx, permitindo transições suaves entre as páginas sem recarregamento:
